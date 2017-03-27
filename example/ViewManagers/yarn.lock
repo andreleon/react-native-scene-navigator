@@ -3584,8 +3584,8 @@ react-native, react-native@0.42.3:
     yargs "^6.4.0"
 
 react-native-scene-navigator:
-  version "1.0.3-a"
-  resolved "https://registry.yarnpkg.com/react-native-scene-navigator/-/react-native-scene-navigator-1.0.3-a.tgz#cd4d9fbe0f529856c4b2c1d3afd9448bbc141288"
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-scene-navigator/-/react-native-scene-navigator-1.0.4.tgz#5318e8d5eaae992d7336977dbb0a732cfacbed35"
   dependencies:
     lodash "^4.17.4"
     react "~15.4.1"
