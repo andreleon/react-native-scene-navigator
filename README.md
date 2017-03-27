@@ -93,8 +93,8 @@ Navigator uses the same Scene transitions as react-native `Navigator`
     ...
 />
 ```
-On ios this equals `ReactNativeNavigator.SceneConfigs.PushFromRight`.
-On android this equals `ReactNativeNavigator.SceneConfigs.FloatFromBottomAndroid`.
+On ios this equals `React.Navigator.SceneConfigs.PushFromRight`.
+On android this equals `React.Navigator.SceneConfigs.FloatFromBottomAndroid`.
 
 #### modal
 ```
@@ -103,10 +103,10 @@ On android this equals `ReactNativeNavigator.SceneConfigs.FloatFromBottomAndroid
     ...
 />
 ```
-For both `ReactNativeNavigator.SceneConfigs.FloatFromBottom`.
+For both `React.Navigator.SceneConfigs.FloatFromBottom`.
 
 #### custom
-If you wish, you can pass any `ReactNativeNavigator.SceneConfigs` to customize your scene transitions.
+If you wish, you can pass any `React.Navigator.SceneConfigs` to customize your scene transitions.
 
 ## Scene
 ```
