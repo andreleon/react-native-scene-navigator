@@ -1,0 +1,35 @@
+{
+  "name": "react-native-scene-navigator",
+  "version": "1.0.1-d",
+  "description": "React Native navigator",
+  "main": "lib/index.js",
+  "repository": {
+    "url": "https://github.com/andreleon/react-native-scene-navigator",
+    "type": "git"
+  },
+  "author": "Leon Smit <lee_smit@live.nl>",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "compile": "npm run clean && babel ./src --out-dir ./lib",
+    "prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "react": "~15.4.1",
+    "react-autobind-component": "^1.0.5",
+    "react-native": "0.42.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-eslint": "^7.2.1",
+    "babel-jest": "19.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "eslint": "^3.18.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-react": "^6.10.3",
+    "jest": "19.0.2",
+    "lodash": "^4.17.4",
+    "react-test-renderer": "~15.4.1"
+  }
+}
