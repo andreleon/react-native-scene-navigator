@@ -1,0 +1,9 @@
+{
+"presets": ["react-native"],
+  "plugins": [
+    ["babel-plugin-module-alias", [
+      { "src": "./app", "expose": "~" }
+    ]]
+  ]
+
+}

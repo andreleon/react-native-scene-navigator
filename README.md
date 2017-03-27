@@ -1,6 +1,8 @@
 # react-native-scene-navigator
-TODO: README
+An easy and intuitive way to manage your scenes in react-native.
+
 ## Navigator
+`Navigator` will pass `navigator` to all of it's `Scene`s
 ```
 import React, { Component} from 'react';
 
@@ -32,7 +34,92 @@ export default class App extends Component {
 };
 ```
 
+### navigator.open
+`navigator.open(reference, params)`
+Open any scene you have configured with `Navigator`.
+```
+exampleClickHandler() {
+    const { navigator } = this.props;
+    navigator.open('scene-reference', {
+        pass: {
+            any: {
+                params: 'To the scene you wish to open'
+            }
+        }
+    });
+}
+```
+
+### navigator.back
+`navigator.back()`
+Goes back one scene.
+```
+exampleClickHandler() {
+    const { navigator } = this.props;
+    navigator.back();
+}
+```
+
+### navigator.attachNavigationBar
+Attaching a navigationbar is easy:
+```
+export default class SomeScene extends Component {
+    componentDidMount() {
+        const { route: { reference }, navigator } = this.props;
+        // navigator needs a route reference,
+        // or it won't know where to attach your NavigationBar!
+        navigator.attachNavigationBar(reference,
+            <NavBar>
+                <Title>SomeSceneTitle</Title>
+            </NavBar>
+        );
+    }
+    ...
+}
+```
+
+### Navigator.transitions
+
+Navigator uses the same Scene transitions as react-native `Navigator`
+([React-Native configurescene](https://facebook.github.io/react-native/docs/navigator.html#configurescene))
+
+#### standard
+```
+<Scene
+    transition={Navigator.transitions.standard}
+    ...
+/>
+```
+On ios this equals `ReactNativeNavigator.SceneConfigs.PushFromRight`.
+On android this equals `ReactNativeNavigator.SceneConfigs.FloatFromBottomAndroid`.
+
+#### modal
+```
+<Scene
+    transition={Navigator.transitions.modal}
+    ...
+/>
+```
+For both `ReactNativeNavigator.SceneConfigs.FloatFromBottom`.
+
+#### custom
+If you wish, you can pass any `ReactNativeNavigator.SceneConfigs` to customize your scene transitions.
+
+## Scene
+```
+<Scene
+    icon={require('~/images/notifications.png')} // TabNavigator
+    selectedIcon={require('~/images/notifications.png')} // TabNavigator
+    title={'Scene title'} // TabNavigator
+    transition={Navigator.transitions.standard} // Navigator
+    reference={'scene-reference'}
+    component={SomeScene}
+    any={prop} // any prop will be passed to SomeScene
+/>
+```
+
 ## TabNavigator
+Add a TabNavigator to manage your TabScenes. The TabNavigator will pass the navigator you provide it to the Scenes it manages.
 ```
 import React, { Component } from 'react';
 import { TabNavigator, Scene } from 'react-native-scene-navigator';
@@ -57,7 +144,7 @@ const tabNavigatorConfigurationProps = {
     // tabActiveTintColor: '#0f0', // #hex or rgba
 };
 
-export default class MainScene extends Component {
+export default class TabbedScene extends Component {
     render() {
         const { navigator, route } = this.props;
         return (
