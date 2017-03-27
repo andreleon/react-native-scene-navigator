@@ -2,6 +2,7 @@
 [![npm version](https://badge.fury.io/js/react-native-scene-navigator.svg)](https://badge.fury.io/js/react-native-scene-navigator)
 
 An easy and intuitive way to manage your scenes in react-native.
+**Run the example to see it in action :D**
 
 ## Navigator
 `Navigator` will pass `navigator` to all of it's `Scene`s
