@@ -1,6 +1,6 @@
 import React, { Children, cloneElement } from 'react';
 import AutoBindComponent from 'react-autobind-component';
-import { findIndex } from 'lodash';
+import { findIndex, get } from 'lodash';
 import {
     StyleSheet,
     ViewPagerAndroid,
@@ -19,11 +19,11 @@ export default class TabNavigator extends AutoBindComponent {
 
     navbars = {};
 
-    // navigator.open(routeKey) opens the coresponging route
-    open(routeKey, params) {
+    // navigator.open(sceneKey) opens the coresponging scene
+    open(sceneKey, params) {
         const { navigator } = this.props;
         if (!navigator) throw new Error('No navigator passed to TabNavigator');
-        navigator.open(routeKey, params);
+        navigator.open(sceneKey, params);
     }
 
     // navigator.back goes back one view
@@ -35,7 +35,7 @@ export default class TabNavigator extends AutoBindComponent {
 
     // render navigationbar of the navigator
     attachNavigationBar(tabReference, component) {
-        const { navigator, route: { reference } } = this.props;
+        const { navigator, scene: { reference } } = this.props;
         const { selectedTabIndex } = this.state;
         if (!navigator) throw new Error('No navigator passed to TabNavigator');
         this.navbars[tabReference] = component;
@@ -69,7 +69,7 @@ export default class TabNavigator extends AutoBindComponent {
                         back: this.back,
                         attachNavigationBar: this.attachNavigationBar,
                     },
-                    route: { ...child.props },
+                    scene: { ...child.props },
                 }),
             };
         });
@@ -93,10 +93,12 @@ export default class TabNavigator extends AutoBindComponent {
     }
 
     updateNavigationBar(index) {
-        const { navigator, route: { reference } } = this.props;
-        if (this.navbars[this._tabStack[index].reference]) {
-            navigator.attachNavigationBar(reference, this.navbars[this._tabStack[index].reference]);
-        }
+        const { navigator, scene: { reference } = {} } = this.props;
+
+        const ref = get(this, `_tabStack[${index}].reference`, false);
+        const navbar = get(this, `navbars[${ref}]`);
+
+        if (ref && navbar) navigator.attachNavigationBar(reference, navbar);
     }
 
     selectTab(index) {

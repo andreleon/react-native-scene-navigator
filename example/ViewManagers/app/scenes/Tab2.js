@@ -13,7 +13,7 @@ import {
 export default class Tab2Scene extends AutoBindComponent {
 
     componentDidMount() {
-        const { route: { reference }, navigator } = this.props;
+        const { scene: { reference }, navigator } = this.props;
         navigator.attachNavigationBar(reference,
             <NavBar>
                 <Title>Tab 2</Title>

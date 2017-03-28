@@ -17,6 +17,7 @@ const tabNavigatorConfigurationProps = {
     //     ...View.style
     // },
     // tabBarHeightAndroid: 100, // android only
+    // translucentIOS: false // ios only
     // tabBarTintColor: '#00f', // #hex or rgba
     // tabTintColor: '#f0f', // #hex or rgba
     // tabActiveTintColor: '#0f0', // #hex or rgba
@@ -24,11 +25,11 @@ const tabNavigatorConfigurationProps = {
 
 export default class MainScene extends AutoBindComponent {
     render() {
-        const { navigator, route } = this.props;
+        const { navigator, scene } = this.props;
         return (
             <TabNavigator
                 navigator={navigator}
-                route={route}
+                scene={scene}
                 {...tabNavigatorConfigurationProps} >
                 <Scene
                     icon={require('~/images/notifications.png')}

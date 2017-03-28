@@ -12,7 +12,7 @@ import {
 export default class DetailScene extends AutoBindComponent {
 
     componentDidMount() {
-        const { route: { reference }, navigator } = this.props;
+        const { scene: { reference }, navigator } = this.props;
         navigator.attachNavigationBar(reference,
             <NavBar>
                 <LeftButton onPress={navigator.back} title={'Back'} />

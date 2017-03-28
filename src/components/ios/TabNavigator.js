@@ -1,6 +1,6 @@
 import React, { Children, cloneElement } from 'react';
 import AutoBindComponent from 'react-autobind-component';
-
+import { get } from 'lodash';
 import {
     TabBarIOS,
 } from 'react-native';
@@ -10,11 +10,11 @@ export default class TabNavigator extends AutoBindComponent {
 
     navbars = {};
 
-    // navigator.open(routeKey) opens the coresponging route
-    open(routeKey, params) {
+    // navigator.open(reference) opens the coresponging scene
+    open(reference, params) {
         const { navigator } = this.props;
         if (!navigator) throw new Error('No navigator passed to TabNavigator');
-        navigator.open(routeKey, params);
+        navigator.open(reference, params);
     }
 
     // navigator.back goes back one view
@@ -26,7 +26,7 @@ export default class TabNavigator extends AutoBindComponent {
 
     // render navigationbar of the navigator
     attachNavigationBar(tabReference, component) {
-        const { navigator, route: { reference } } = this.props;
+        const { navigator, scene: { reference } } = this.props;
         if (!navigator) throw new Error('No navigator passed to TabNavigator');
         this.navbars[tabReference] = component;
         navigator.attachNavigationBar(reference, component);
@@ -56,7 +56,7 @@ export default class TabNavigator extends AutoBindComponent {
                         back: this.back,
                         attachNavigationBar: this.attachNavigationBar,
                     },
-                    route: { ...child.props },
+                    scene: { ...child.props },
                 }),
             };
         });
@@ -67,11 +67,13 @@ export default class TabNavigator extends AutoBindComponent {
     }
 
     selectTab(index) {
-        const { navigator, route: { reference } } = this.props;
+        const { navigator, scene: { reference } = {} } = this.props;
         this.setState({selectedTabIndex: index});
-        if (this.navbars[this._tabStack[index].reference]) {
-            navigator.attachNavigationBar(reference, this.navbars[this._tabStack[index].reference]);
-        }
+
+        const ref = get(this, `_tabStack[${index}].reference`, false);
+        const navbar = get(this, `navbars[${ref}]`);
+
+        if (ref && navbar) navigator.attachNavigationBar(reference, navbar);
     }
 
     renderTabs() {
@@ -93,9 +95,9 @@ export default class TabNavigator extends AutoBindComponent {
     }
 
     render() {
-        const { tabBarTintColor, tabTintColor, tabActiveTintColor } = this.props;
+        const { tabBarTintColor, tabTintColor, tabActiveTintColor, translucentIOS } = this.props;
         return (
-            <TabBarIOS barTintColor={tabBarTintColor} tintColor={tabActiveTintColor} unselectedItemTintColor={tabTintColor} unselectedTintColor={tabTintColor}>
+            <TabBarIOS translucent={translucentIOS} barTintColor={tabBarTintColor} tintColor={tabActiveTintColor} unselectedItemTintColor={tabTintColor} unselectedTintColor={tabTintColor}>
                 { this.renderTabs() }
             </TabBarIOS>
         );

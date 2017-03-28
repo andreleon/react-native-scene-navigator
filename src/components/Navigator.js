@@ -42,7 +42,7 @@ export default class Navigator extends AutoBindComponent {
     constructor(props) {
         super(props);
 
-        this._routeStack = Children.map(props.children, (child, index) => {
+        this._sceneStack = Children.map(props.children, (child, index) => {
             if (child.type !== Scene) throw new Error(`Expected 'Scene' but instead got '${child.type.displayName}'. Please use Navigator component Scene for scene declarations.`);
             return {
                 component: child,
@@ -51,7 +51,7 @@ export default class Navigator extends AutoBindComponent {
             };
         });
         // make rootview accessible to this component
-        this._rootView = this._routeStack[0];
+        this._rootScene = this._sceneStack[0];
         navigatorConfig.init(this);
     }
 
@@ -60,16 +60,16 @@ export default class Navigator extends AutoBindComponent {
         navigatorConfig.destroy(this);
     }
 
-    attachNavigationBar(routeReference, navbarComponent) {
+    attachNavigationBar(sceneReference, navbarComponent) {
         this.setState(({navbars}) => {
-            navbars[routeReference] = navbarComponent;
+            navbars[sceneReference] = navbarComponent;
             return { navbars };
         });
     }
 
-    // navigator.open(routeKey) opens the coresponging route
-    open(routeKey, params) {
-        const route = find(this._routeStack, {reference: routeKey});
+    // navigator.open(reference) opens the coresponging route
+    open(reference, params) {
+        const route = find(this._sceneStack, {reference});
         this.refs.navigator.push({params, ...route});
     }
 
@@ -82,7 +82,7 @@ export default class Navigator extends AutoBindComponent {
     // back button press handler for android
     // goed back one view, if its at the root, it minimizes the app
     _handleBackPressAndroid() {
-        if (this._getLastRoute() === this._rootView) return false;
+        if (this._getLastRoute() === this._rootScene) return false;
         this.refs.navigator.pop();
         return true;
     }
@@ -106,15 +106,15 @@ export default class Navigator extends AutoBindComponent {
             <ReactNativeNavigator
                 style={{flex: 1, backgroundColor: '#000'}}
                 ref='navigator'
-                initialRoute={this._rootView}
+                initialRoute={this._rootScene}
                 configureScene={({transition}) => transition}
                 // sceneStyle={{overflow: 'visible'}}
-                renderScene={({component, ...route}, navigator) => {
+                renderScene={({component, ...scene}, navigator) => {
                     return (
                         <DeferredView>
-                            { navbars[route.reference] }
+                            { navbars[scene.reference] }
                             { cloneElement(component, {
-                                route,
+                                scene,
                                 navigator: {
                                     open: this.open,
                                     back: this.back,

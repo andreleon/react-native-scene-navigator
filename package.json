@@ -1,6 +1,6 @@
 {
   "name": "react-native-scene-navigator",
-  "version": "1.0.4-f",
+  "version": "1.0.5-d",
   "description": "React Native navigator",
   "main": "lib/index.js",
   "repository": {

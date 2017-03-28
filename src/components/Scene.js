@@ -9,9 +9,9 @@ export default class Scene extends AutoBindComponent {
     };
 
     render() {
-        const { component: Component, navigator, route, ...passProps} = this.props;
+        const { component: Component, navigator, scene, ...passProps} = this.props;
         return (
-            <Component navigator={navigator} route={route} {...passProps} />
+            <Component navigator={navigator} scene={scene} {...passProps} />
         );
     }
 };

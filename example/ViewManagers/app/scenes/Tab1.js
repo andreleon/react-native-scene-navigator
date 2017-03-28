@@ -11,7 +11,7 @@ import {
 export default class Tab1Scene extends AutoBindComponent {
 
     componentDidMount() {
-        const { route: { reference }, navigator } = this.props;
+        const { scene: { reference }, navigator } = this.props;
         navigator.attachNavigationBar(reference,
             <NavBar>
                 <Title>Tab 1</Title>

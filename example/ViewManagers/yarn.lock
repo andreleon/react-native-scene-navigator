@@ -3503,7 +3503,7 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
-react-native, react-native@0.42.3:
+react-native:
   version "0.42.3"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.42.3.tgz#450c8a03a5e3e991a08a426f22776dd8feb80b26"
   dependencies:
@@ -3584,13 +3584,11 @@ react-native, react-native@0.42.3:
     yargs "^6.4.0"
 
 react-native-scene-navigator:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-scene-navigator/-/react-native-scene-navigator-1.0.4.tgz#5318e8d5eaae992d7336977dbb0a732cfacbed35"
+  version "1.0.5-c"
+  resolved "https://registry.yarnpkg.com/react-native-scene-navigator/-/react-native-scene-navigator-1.0.5-c.tgz#15d6b0eaa61baa554540d80f2d26ad8b062cd6b2"
   dependencies:
     lodash "^4.17.4"
-    react "~15.4.1"
     react-autobind-component "^1.0.5"
-    react-native "0.42.3"
 
 react-proxy@^1.1.7:
   version "1.1.8"

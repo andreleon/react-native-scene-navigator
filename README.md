@@ -70,8 +70,8 @@ Attaching a navigationbar is easy:
 ```
 export default class SomeScene extends Component {
     componentDidMount() {
-        const { route: { reference }, navigator } = this.props;
-        // navigator needs a route reference,
+        const { scene: { reference }, navigator } = this.props;
+        // navigator needs a scene reference,
         // or it won't know where to attach your NavigationBar!
         navigator.attachNavigationBar(reference,
             <SomeNavBar>
@@ -136,11 +136,11 @@ import Tab3Scene from '~/scenes/Tab3';
 
 export default class TabbedScene extends Component {
     render() {
-        const { navigator, route } = this.props;
+        const { navigator, scene } = this.props;
         return (
             <TabNavigator
                 navigator={navigator}
-                route={route} >
+                scene={scene} >
                 <Scene
                     icon={require('~/images/notifications.png')}
                     reference={'tab-1'}
@@ -181,7 +181,9 @@ const tabNavigatorConfigurationProps = {
 
     // android only, default 60
     tabBarHeightAndroid: 100,
-
+    
+    // IOS only, default true
+    translucentIOS: false,
     // both platforms
     tabBarTintColor: '#00f', // #hex or rgba
     tabTintColor: '#f0f', // #hex or rgba
@@ -190,7 +192,7 @@ const tabNavigatorConfigurationProps = {
 
 <TabNavigator
     navigator={navigator} // will be passed down
-    route={route} // will be passed down
+    scene={scene} // will be passed down
     {...tabNavigatorConfigurationProps} >
     ...
 </TabNavigator>
