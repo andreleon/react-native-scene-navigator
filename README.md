@@ -5,7 +5,7 @@ A **cross-platform**, easy and intuitive way to manage your scenes in react-nati
 **Run the example on both iOS and Android to see it in action :D**
 
 ## Navigator
-`Navigator` will pass `navigator` to all of it's `Scene`s
+`Navigator` is the root level component that manages all your scene (`Scene`) transitions. Navigator internally uses the [React-Native Navigator](https://facebook.github.io/react-native/docs/navigator.html#navigator) component, but makes it easy and intuitive to use.
 ```
 import React, { Component} from 'react';
 
@@ -37,11 +37,13 @@ export default class App extends Component {
 };
 ```
 
+`Navigator` will pass a `navigator` to all of the `Scene`s it manages.
+
 ### navigator.open
-`navigator.open(reference, params)`
 Open any scene you have configured with `Navigator`.
+`navigator.open(reference, params)`
 ```
-exampleClickHandler() {
+examplePressHandler() {
     const { navigator } = this.props;
     navigator.open('scene-reference', {
         pass: {
@@ -54,10 +56,10 @@ exampleClickHandler() {
 ```
 
 ### navigator.back
-`navigator.back()`
 Goes back one scene.
+`navigator.back()`
 ```
-exampleClickHandler() {
+examplePressHandler() {
     const { navigator } = this.props;
     navigator.back();
 }
@@ -72,9 +74,9 @@ export default class SomeScene extends Component {
         // navigator needs a route reference,
         // or it won't know where to attach your NavigationBar!
         navigator.attachNavigationBar(reference,
-            <NavBar>
-                <Title>SomeSceneTitle</Title>
-            </NavBar>
+            <SomeNavBar>
+                <SomeTitle>SomeSceneTitle</SomeTitle>
+            </SomeNavBar>
         );
     }
     ...
@@ -82,8 +84,7 @@ export default class SomeScene extends Component {
 ```
 
 ### Navigator.transitions
-
-Navigator uses the same Scene transitions as react-native `Navigator`
+Navigator uses the same Scene transitions as the react-native `Navigator`
 ([React-Native configurescene](https://facebook.github.io/react-native/docs/navigator.html#configurescene))
 
 #### standard
@@ -106,7 +107,7 @@ On android this equals `React.Navigator.SceneConfigs.FloatFromBottomAndroid`.
 For both `React.Navigator.SceneConfigs.FloatFromBottom`.
 
 #### custom
-If you wish, you can pass any `React.Navigator.SceneConfigs` to customize your scene transitions.
+If you wish, you can pass any `React.Navigator.SceneConfigs` to customize your scene transitions. ([React-Native configurescene](https://facebook.github.io/react-native/docs/navigator.html#configurescene))
 
 ## Scene
 ```
@@ -122,7 +123,7 @@ If you wish, you can pass any `React.Navigator.SceneConfigs` to customize your s
 ```
 
 ## TabNavigator
-Add a TabNavigator to manage your TabScenes. The TabNavigator will pass the navigator you provide it to the Scenes it manages.
+Add a TabNavigator to manage your TabScenes. TabNavigator will pass the navigator you provide it to the Scenes it manages. It can also be used independent of `Navigator`.
 ```
 import React, { Component } from 'react';
 import { TabNavigator, Scene } from 'react-native-scene-navigator';
@@ -131,30 +132,13 @@ import Tab1Scene from '~/scenes/Tab1';
 import Tab2Scene from '~/scenes/Tab2';
 import Tab3Scene from '~/scenes/Tab3';
 
-const tabNavigatorConfigurationProps = {
-    // initialTab: 'tab-2', // scene reference
-    // scrollEnabledAndroid: false, // android only
-    // pageMarginAndroid: 10, // android only
-    // tabIndicatorStyleAndroid: { // android only
-    //     height: 10,
-    //     bottom: 5,
-    //     backgroundColor: '#f0f',
-    //     ...View.style
-    // },
-    // tabBarHeightAndroid: 100, // android only
-    // tabBarTintColor: '#00f', // #hex or rgba
-    // tabTintColor: '#f0f', // #hex or rgba
-    // tabActiveTintColor: '#0f0', // #hex or rgba
-};
-
 export default class TabbedScene extends Component {
     render() {
         const { navigator, route } = this.props;
         return (
             <TabNavigator
                 navigator={navigator}
-                route={route}
-                {...tabNavigatorConfigurationProps} >
+                route={route} >
                 <Scene
                     icon={require('~/images/notifications.png')}
                     reference={'tab-1'}
@@ -171,4 +155,41 @@ export default class TabbedScene extends Component {
         );
     }
 };
+```
+### configuration
+`TabNavigator` has some configuration props.
+```
+const tabNavigatorConfigurationProps = {
+    // scene reference, defaults to first tab
+    initialTab: 'tab-2',
+
+    // android only, defaults to true
+    scrollEnabledAndroid: true,
+
+    // android only, defaults to 0
+    pageMarginAndroid: 10,
+
+    // android only
+    tabIndicatorStyleAndroid: {
+        height: 10, // default 4
+        bottom: 5, // default 0
+        backgroundColor: '#f0f', // default #fff
+        // ...View.style
+    },
+
+    // android only, default 60
+    tabBarHeightAndroid: 100,
+
+    // both platforms
+    tabBarTintColor: '#00f', // #hex or rgba
+    tabTintColor: '#f0f', // #hex or rgba
+    tabActiveTintColor: '#0f0', // #hex or rgba
+};
+
+<TabNavigator
+    navigator={navigator} // will be passed down
+    route={route} // will be passed down
+    {...tabNavigatorConfigurationProps} >
+    ...
+</TabNavigator>
 ```
