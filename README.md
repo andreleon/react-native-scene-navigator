@@ -123,7 +123,9 @@ If you wish, you can pass any `React.Navigator.SceneConfigs` to customize your s
 ```
 
 ## TabNavigator
-Add a TabNavigator to manage your TabScenes. TabNavigator will pass the navigator you provide it to the Scenes it manages. It can also be used independent of `Navigator`.
+Add a `TabNavigator` to manage your TabScenes. TabNavigator will pass the navigator you provide it to the Scenes it manages. It can also be used independent of `Navigator`.
+
+`TabNavigator` internally uses [TabBarIOS](https://facebook.github.io/react-native/docs/tabbarios.html) for iOS and [ViewPagerAndroid](https://facebook.github.io/react-native/docs/viewpagerandroid.html) for android.
 ```
 import React, { Component } from 'react';
 import { TabNavigator, Scene } from 'react-native-scene-navigator';
