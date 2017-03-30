@@ -115,6 +115,7 @@ If you wish, you can pass any `React.Navigator.SceneConfigs` to customize your s
     icon={require('~/images/notifications.png')} // TabNavigator
     selectedIcon={require('~/images/notifications.png')} // TabNavigator
     title={'Scene title'} // TabNavigator
+    badge={number} // TabNavigator
     transition={Navigator.transitions.standard} // Navigator
     reference={'scene-reference'}
     component={SomeScene}
