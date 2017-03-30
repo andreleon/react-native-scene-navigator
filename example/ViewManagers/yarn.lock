@@ -3584,8 +3584,8 @@ react-native:
     yargs "^6.4.0"
 
 react-native-scene-navigator:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/react-native-scene-navigator/-/react-native-scene-navigator-1.0.7.tgz#e1166aa4c75338e558230efe0d030f31cccd5e9a"
+  version "1.0.7-b"
+  resolved "https://registry.yarnpkg.com/react-native-scene-navigator/-/react-native-scene-navigator-1.0.7-b.tgz#5c4817f512f38e4aec1d27c6f1429c66c04ce34b"
   dependencies:
     lodash "^4.17.4"
     react-autobind-component "^1.0.5"

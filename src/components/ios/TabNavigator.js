@@ -108,9 +108,10 @@ export default class TabNavigator extends AutoBindComponent {
         const { badgeColorIOS } = this.props;
         return this._tabStack.map(({child, icon, selectedIcon, title = '', reference}, index) => {
             const { selectedTabIndex } = this.state;
+            const badge = this.getBadgeNumber(reference);
             return (
                 <TabBarIOS.Item
-                    badge={this.getBadgeNumber(reference)}
+                    badge={badge ? badge : undefined}
                     badgeColor={badgeColorIOS}
                     key={index}
                     title={title}
