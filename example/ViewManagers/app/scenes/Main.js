@@ -54,7 +54,7 @@ export default class MainScene extends AutoBindComponent {
             this.setState(({badgeNumber}) => {
                 return { badgeNumber: badgeNumber + 1 };
             });
-        }, 500);
+        }, 5000);
     }
     render() {
         const { navigator, scene } = this.props;
