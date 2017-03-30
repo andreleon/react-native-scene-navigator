@@ -9,7 +9,9 @@ import ModalScene from '~/scenes/Modal';
 export default class App extends Component {
     render() {
         return (
-            <Navigator>
+            <Navigator
+                onTransitionComplete={() => console.log('jaja')}
+            >
                 <Scene
                     transition={Navigator.transitions.standard}
                     reference={'main'}

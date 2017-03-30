@@ -37,13 +37,15 @@ export default class TabNavigator extends AutoBindComponent {
         const { children } = props;
 
         this._initialTab = 0;
+        let badgeNumbers = {};
 
         this._tabStack = Children.map(children, (child, index) => {
             if (child.type !== Scene) throw new Error(`Expected 'Scene' but instead got '${child.type.displayName}'. Please use Navigator component Scene for scene declarations.`);
 
-            const { title, reference, icon, selectedIcon } = child.props;
+            const { title, reference, icon, selectedIcon, badge } = child.props;
 
             if (props.initialTab === reference) this._initialTab = index;
+            badgeNumbers[reference] = badge;
 
             return {
                 title,
@@ -56,6 +58,9 @@ export default class TabNavigator extends AutoBindComponent {
                         back: this.back,
                         attachNavigationBar: this.attachNavigationBar,
                     },
+                    tabNavigator: {
+                        setBadge: this.setBadge,
+                    },
                     scene: { ...child.props },
                 }),
             };
@@ -63,7 +68,30 @@ export default class TabNavigator extends AutoBindComponent {
 
         this.state = {
             selectedTabIndex: this._initialTab,
+            badgeNumbers,
         };
+    }
+
+    componentWillReceiveProps({children}) {
+        Children.forEach(children, ({props: {badge, reference}}) => {
+            if (badge === undefined) return;
+            this.setState(({badgeNumbers}) => {
+                badgeNumbers[reference] = badge;
+                return {badgeNumbers};
+            });
+        });
+    }
+
+    setBadge(tabReference, badgeNumber) {
+        this.setState(({badgeNumbers}) => {
+            badgeNumbers[tabReference] = badgeNumber;
+            return {badgeNumbers};
+        })
+    }
+
+    getBadgeNumber(tabReference) {
+        const { badgeNumbers } = this.state;
+        return badgeNumbers[tabReference];
     }
 
     selectTab(index) {
@@ -77,10 +105,13 @@ export default class TabNavigator extends AutoBindComponent {
     }
 
     renderTabs() {
-        return this._tabStack.map(({child, icon, selectedIcon, title = ''}, index) => {
+        const { badgeColorIOS } = this.props;
+        return this._tabStack.map(({child, icon, selectedIcon, title = '', reference}, index) => {
             const { selectedTabIndex } = this.state;
             return (
                 <TabBarIOS.Item
+                    badge={this.getBadgeNumber(reference)}
+                    badgeColor={badgeColorIOS}
                     key={index}
                     title={title}
                     icon={icon}

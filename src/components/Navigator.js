@@ -78,6 +78,11 @@ export default class Navigator extends AutoBindComponent {
         this.refs.navigator.pop();
     }
 
+    onTransitionComplete(event) {
+        const { onTransitionComplete } = this.props;
+        if (onTransitionComplete) onTransitionComplete(event);
+    }
+
     // private:
     // back button press handler for android
     // goed back one view, if its at the root, it minimizes the app
@@ -108,6 +113,7 @@ export default class Navigator extends AutoBindComponent {
                 ref='navigator'
                 initialRoute={this._rootScene}
                 configureScene={({transition}) => transition}
+                onDidFocus={this.onTransitionComplete}
                 // sceneStyle={{overflow: 'visible'}}
                 renderScene={({component, ...scene}, navigator) => {
                     return (

@@ -50,24 +50,30 @@ export default class TabNavigator extends AutoBindComponent {
         const { children } = props;
 
         this._initialPage = 0;
+        let badgeNumbers = {};
 
         this._tabStack = Children.map(children, (child, index) => {
             if (child.type !== Scene) throw new Error(`Expected 'Scene' but instead got '${child.type.displayName}'. Please use Navigator component Scene for scene declarations.`);
 
-            const { title, reference, icon, selectedIcon } = child.props;
+            const { title, reference, icon, selectedIcon, badge } = child.props;
 
             if (props.initialTab === reference) this._initialPage = index;
+            badgeNumbers[reference] = badge;
 
             return {
                 title,
                 icon,
                 selectedIcon,
                 reference,
+                badge,
                 child: cloneElement(child, {
                     navigator: {
                         open: this.open,
                         back: this.back,
                         attachNavigationBar: this.attachNavigationBar,
+                    },
+                    tabNavigator: {
+                        setBadge: this.setBadge,
                     },
                     scene: { ...child.props },
                 }),
@@ -80,6 +86,7 @@ export default class TabNavigator extends AutoBindComponent {
             offset: new Animated.Value(0),
             position: new Animated.Value(this._initialPage),
             selectedTabIndex: this._initialPage,
+            badgeNumbers,
         };
 
         this.indicatorAnimator = Animated.event([{
@@ -90,6 +97,28 @@ export default class TabNavigator extends AutoBindComponent {
         }], {listener: this.handlePageScroll});
         this.state.actualOffset = Animated.add(this.state.position, this.state.offset);
         this.state.indicatorLeft = Animated.multiply(this._buttonWidth, this.state.actualOffset);
+    }
+
+    componentWillReceiveProps({children}) {
+        Children.forEach(children, ({props: {badge, reference}}) => {
+            if (badge === undefined) return;
+            this.setState(({badgeNumbers}) => {
+                badgeNumbers[reference] = badge;
+                return {badgeNumbers};
+            });
+        });
+    }
+
+    setBadge(tabReference, badgeNumber) {
+        this.setState(({badgeNumbers}) => {
+            badgeNumbers[tabReference] = badgeNumber;
+            return {badgeNumbers};
+        })
+    }
+
+    getBadgeNumber(tabReference) {
+        const { badgeNumbers } = this.state;
+        return badgeNumbers[tabReference];
     }
 
     updateNavigationBar(index) {
@@ -142,9 +171,11 @@ export default class TabNavigator extends AutoBindComponent {
     }
 
     renderTabButtons() {
+        const { badgeStyleAndroid, badgeTextStyleAndroid } = this.props;
         const { style } = this;
-        return this._tabStack.map(({child, title, icon, selectedIcon}, index) => {
+        return this._tabStack.map(({child, title, icon, selectedIcon, reference}, index) => {
             const { selectedTabIndex } = this.state;
+            const badge = this.getBadgeNumber(reference);
             const isActive = selectedTabIndex === index;
             return (
                 <Button
@@ -152,7 +183,16 @@ export default class TabNavigator extends AutoBindComponent {
                     style={[style.button, {width: this._buttonWidth}]}
                     onPress={() => this.selectTab(index)}
                 >
-                    { icon && <Image style={[style.icon, isActive && style.iconActive, this.getUserDefinedIconColor(isActive)]} source={selectedIcon ? (isActive ? selectedIcon : icon) : icon} /> }
+                    { icon &&
+                        <View style={{padding: 10, paddingLeft: 20, paddingRight: 20}}>
+                            { !!badge &&
+                                <View style={badgeStyleAndroid}>
+                                    <Text style={badgeTextStyleAndroid}>{badge}</Text>
+                                </View>
+                            }
+                            <Image style={[style.icon, isActive && style.iconActive, this.getUserDefinedIconColor(isActive)]} source={selectedIcon ? (isActive ? selectedIcon : icon) : icon} />
+                        </View>
+                    }
                     { title && <Text style={[style.text, isActive && style.textActive, this.getUserDefinedTextColor(isActive)]}>{title}</Text> }
                 </Button>
             );

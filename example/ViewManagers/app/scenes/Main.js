@@ -21,11 +21,44 @@ const tabNavigatorConfigurationProps = {
     // tabBarTintColor: '#00f', // #hex or rgba
     // tabTintColor: '#f0f', // #hex or rgba
     // tabActiveTintColor: '#0f0', // #hex or rgba
+    badgeColorIOS: '#f0f', //ios >= 10
+    badgeStyleAndroid: {
+        padding: 0,
+        paddingLeft: 2,
+        paddingRight: 2,
+        minWidth: 16,
+        borderRadius: 12,
+        top: 0,
+        right: 5,
+        position: 'absolute',
+        zIndex: 2,
+        backgroundColor: '#f0f',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    badgeTextStyleAndroid: {
+        color: '#fff',
+        fontSize: 10,
+    },
 };
 
 export default class MainScene extends AutoBindComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            badgeNumber: 0,
+        };
+
+        setInterval(() => {
+            this.setState(({badgeNumber}) => {
+                return { badgeNumber: badgeNumber + 1 };
+            });
+        }, 500);
+    }
     render() {
         const { navigator, scene } = this.props;
+        const { badgeNumber } = this.state;
         return (
             <TabNavigator
                 navigator={navigator}
@@ -34,14 +67,17 @@ export default class MainScene extends AutoBindComponent {
                 <Scene
                     icon={require('~/images/notifications.png')}
                     reference={'tab-1'}
+                    badge={'•'}
                     component={Tab1Scene} />
                 <Scene
                     icon={require('~/images/chats.png')}
                     reference={'tab-2'}
+                    badge={badgeNumber}
                     component={Tab2Scene} />
                 <Scene
                     icon={require('~/images/profile.png')}
                     reference={'tab-3'}
+                    badge={200}
                     component={Tab3Scene} />
             </TabNavigator>
         );

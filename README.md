@@ -158,6 +158,10 @@ export default class TabbedScene extends Component {
     }
 };
 ```
+
+### tabNavigator
+`TabNavigator` passes tabNavigator to all of it's scenes. you can set the tab badge number with `tabNavigator.setBadge(number)`.
+
 ### configuration
 `TabNavigator` has some configuration props.
 ```
@@ -188,6 +192,25 @@ const tabNavigatorConfigurationProps = {
     tabBarTintColor: '#00f', // #hex or rgba
     tabTintColor: '#f0f', // #hex or rgba
     tabActiveTintColor: '#0f0', // #hex or rgba
+    badgeColorIOS: '#f0f', //ios >= 10
+    badgeStyleAndroid: {
+        padding: 0,
+        paddingLeft: 2,
+        paddingRight: 2,
+        minWidth: 16,
+        borderRadius: 12,
+        top: 0,
+        right: 5,
+        position: 'absolute',
+        zIndex: 2,
+        backgroundColor: '#f0f',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    badgeTextStyleAndroid: {
+        color: '#fff',
+        fontSize: 10,
+    },
 };
 
 <TabNavigator
@@ -197,3 +220,5 @@ const tabNavigatorConfigurationProps = {
     ...
 </TabNavigator>
 ```
+
+
