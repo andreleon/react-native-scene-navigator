@@ -10,8 +10,7 @@
 		"lodash": "^4.17.4",
 		"react": "~15.4.1",
 		"react-autobind-component": "^1.0.5",
-		"react-native": "0.42.3",
-		"react-native-scene-navigator": "^1.0.7-b"
+		"react-native": "0.42.3"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.24.0",

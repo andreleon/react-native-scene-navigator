@@ -1,6 +1,6 @@
 {
   "name": "react-native-scene-navigator",
-  "version": "1.0.7-b",
+  "version": "1.0.9",
   "description": "React Native navigator",
   "main": "lib/index.js",
   "repository": {
@@ -12,6 +12,7 @@
   "scripts": {
     "clean": "rm -rf ./lib",
     "compile": "npm run clean && babel ./src --out-dir ./lib",
+    "update-example": "cp -R ./lib ./example/ViewManagers && mv ./example/ViewManagers/lib ./example/ViewManagers/react-native-scene-navigator",
     "prepublish": "npm run compile"
   },
   "dependencies": {

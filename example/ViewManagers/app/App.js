@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 
-import { Navigator, Scene } from 'react-native-scene-navigator';
+import { Navigator, Scene } from '../react-native-scene-navigator';
 
 import MainScene from '~/scenes/Main';
 import DetailScene from '~/scenes/Detail';

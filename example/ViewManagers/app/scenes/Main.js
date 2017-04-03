@@ -1,6 +1,6 @@
 import React from 'react';
 import AutoBindComponent from 'react-autobind-component';
-import { TabNavigator, Scene } from 'react-native-scene-navigator';
+import { TabNavigator, Scene } from '../../react-native-scene-navigator'; // ex
 
 import Tab1Scene from '~/scenes/Tab1';
 import Tab2Scene from '~/scenes/Tab2';
@@ -21,25 +21,25 @@ const tabNavigatorConfigurationProps = {
     // tabBarTintColor: '#00f', // #hex or rgba
     // tabTintColor: '#f0f', // #hex or rgba
     // tabActiveTintColor: '#0f0', // #hex or rgba
-    badgeColorIOS: '#f0f', //ios >= 10
-    badgeStyleAndroid: {
-        padding: 0,
-        paddingLeft: 2,
-        paddingRight: 2,
-        minWidth: 16,
-        borderRadius: 12,
-        top: 0,
-        right: 5,
-        position: 'absolute',
-        zIndex: 2,
-        backgroundColor: '#f0f',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    badgeTextStyleAndroid: {
-        color: '#fff',
-        fontSize: 10,
-    },
+    // badgeColorIOS: '#f0f', //ios >= 10
+    // badgeStyleAndroid: {
+    //     padding: 0,
+    //     paddingLeft: 2,
+    //     paddingRight: 2,
+    //     minWidth: 16,
+    //     borderRadius: 12,
+    //     top: 0,
+    //     right: 5,
+    //     position: 'absolute',
+    //     zIndex: 2,
+    //     backgroundColor: '#f0f',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    // },
+    // badgeTextStyleAndroid: {
+    //     color: '#fff',
+    //     fontSize: 10,
+    // },
 };
 
 export default class MainScene extends AutoBindComponent {
@@ -47,12 +47,12 @@ export default class MainScene extends AutoBindComponent {
         super(props);
 
         this.state = {
-            badgeNumber: 0,
+            badgeNumber: 2,
         };
 
         setInterval(() => {
             this.setState(({badgeNumber}) => {
-                return { badgeNumber: badgeNumber + 1 };
+                if (badgeNumber) return { badgeNumber: badgeNumber - 1 };
             });
         }, 5000);
     }

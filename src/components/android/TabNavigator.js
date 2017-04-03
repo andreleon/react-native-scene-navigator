@@ -170,12 +170,24 @@ export default class TabNavigator extends AutoBindComponent {
         if (tabTintColor && !isActive) return { color: tabTintColor };
     }
 
-    renderTabButtons() {
+    renderBadge(reference) {
+        const badge = this.getBadgeNumber(reference);
         const { badgeStyleAndroid, badgeTextStyleAndroid } = this.props;
+        if (badge) {
+            return (
+                <View style={badgeStyleAndroid}>
+                    <Text style={badgeTextStyleAndroid}>{badge}</Text>
+                </View>
+            );
+        } else {
+            return <View></View>;
+        }
+    }
+
+    renderTabButtons() {
         const { style } = this;
         return this._tabStack.map(({child, title, icon, selectedIcon, reference}, index) => {
             const { selectedTabIndex } = this.state;
-            const badge = this.getBadgeNumber(reference);
             const isActive = selectedTabIndex === index;
             return (
                 <Button
@@ -185,11 +197,7 @@ export default class TabNavigator extends AutoBindComponent {
                 >
                     { icon &&
                         <View style={{padding: 10, paddingLeft: 20, paddingRight: 20}}>
-                            { !!badge &&
-                                <View style={badgeStyleAndroid}>
-                                    <Text style={badgeTextStyleAndroid}>{badge}</Text>
-                                </View>
-                            }
+                            { this.renderBadge(reference) }
                             <Image style={[style.icon, isActive && style.iconActive, this.getUserDefinedIconColor(isActive)]} source={selectedIcon ? (isActive ? selectedIcon : icon) : icon} />
                         </View>
                     }
@@ -249,6 +257,7 @@ export default class TabNavigator extends AutoBindComponent {
         },
         icon: {
             tintColor: 'rgba(255,255,255,0.5)',
+            zIndex: 1,
         },
         iconActive: {
             tintColor: 'rgba(255,255,255,1)',
