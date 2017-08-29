@@ -59,7 +59,7 @@ export default class TabNavigator extends AutoBindComponent {
         this._tabStack = Children.map(children, (child, index) => {
             if (child.type !== Scene) throw new Error(`Expected 'Scene' but instead got '${child.type.displayName}'. Please use Navigator component Scene for scene declarations.`);
 
-            const { title, reference, icon, selectedIcon, badge } = child.props;
+            const { title, reference, icon, selectedIcon, badge, accessibilityLabel } = child.props;
 
             if (props.initialTab === reference) this._initialPage = index;
             badgeNumbers[reference] = badge;
@@ -70,6 +70,7 @@ export default class TabNavigator extends AutoBindComponent {
                 selectedIcon,
                 reference,
                 badge,
+                accessibilityLabel,
                 child: cloneElement(child, {
                     navigator: {
                         open: this.open,
