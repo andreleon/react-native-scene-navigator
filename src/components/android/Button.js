@@ -16,14 +16,14 @@ export default class Button extends AutoBindComponent {
     }
 
     render() {
-        const { children, style: extraStyle } = this.props;
+        const { children, style: extraStyle, accessibilityLabel } = this.props;
         const { style } = this;
         return (
             <TouchableNativeFeedback
                 onPress={this.onPress}
                 background={TouchableNativeFeedback.SelectableBackground()}
             >
-                <View style={[style.container, extraStyle]}>
+                <View style={[style.container, extraStyle]} accessibilityLabel={accessibilityLabel}>
                     {children}
                 </View>
             </TouchableNativeFeedback>

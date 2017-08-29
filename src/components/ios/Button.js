@@ -16,7 +16,7 @@ export default class Button extends AutoBindComponent {
     }
 
     render() {
-        const { children, style: extraStyle } = this.props;
+        const { children, style: extraStyle, accessibilityLabel } = this.props;
         const { style } = this;
         return (
             <TouchableHighlight
@@ -24,7 +24,7 @@ export default class Button extends AutoBindComponent {
                 underlayColor={'rgba(0,0,0,0.5)'}
                 style={[style.container, extraStyle]}
             >
-                <View>
+                <View accessibilityLabel={accessibilityLabel}>
                     {children}
                 </View>
             </TouchableHighlight>

@@ -6,6 +6,10 @@ import {
 } from 'react-native';
 import Scene from '../Scene';
 
+import Dispatcher from '../../utils/Dispatcher';
+
+const _TabsDispatcher = new Dispatcher();
+
 export default class TabNavigator extends AutoBindComponent {
 
     navbars = {};
@@ -60,6 +64,7 @@ export default class TabNavigator extends AutoBindComponent {
                     },
                     tabNavigator: {
                         setBadge: this.setBadge,
+                        selectTab: this.selectTab,
                     },
                     scene: { ...child.props },
                 }),
@@ -101,12 +106,26 @@ export default class TabNavigator extends AutoBindComponent {
         const ref = get(this, `_tabStack[${index}].reference`, false);
         const navbar = get(this, `navbars[${ref}]`);
 
+        _TabsDispatcher.dispatch({reference: ref, index});
+
         if (ref && navbar) navigator.attachNavigationBar(reference, navbar);
+    }
+
+    onChangeTab(cb) {
+        _TabsDispatcher.subscribe(cb);
+    }
+
+    offChangeTab(cb) {
+        _TabsDispatcher.unsubscribe(cb);
+    }
+
+    componentWillUnmount() {
+        _TabsDispatcher.destroy();
     }
 
     renderTabs() {
         const { badgeColorIOS } = this.props;
-        return this._tabStack.map(({child, icon, selectedIcon, title = '', reference}, index) => {
+        return this._tabStack.map(({child, icon, selectedIcon, title = '', reference, accessibilityLabel}, index) => {
             const { selectedTabIndex } = this.state;
             const badge = this.getBadgeNumber(reference);
             return (
@@ -116,6 +135,7 @@ export default class TabNavigator extends AutoBindComponent {
                     key={index}
                     title={title}
                     icon={icon}
+                    accessibilityLabel={accessibilityLabel}
                     selectedIcon={selectedIcon}
                     selected={selectedTabIndex === index}
                     onPress={() => this.selectTab(index)}

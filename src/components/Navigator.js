@@ -1,10 +1,10 @@
 import React, { cloneElement, Children } from 'react';
 import AutoBindComponent from 'react-autobind-component';
 import { find } from 'lodash';
+import { Navigator as ReactNativeNavigator } from 'react-native-deprecated-custom-components';
 import {
-    Navigator as ReactNativeNavigator,
-    BackAndroid,
     Platform,
+    BackHandler,
 } from 'react-native';
 
 import DeferredView from './DeferredView';
@@ -23,14 +23,15 @@ const navigatorConfig = Platform.select({
     android: () => {
         return {
             init: (instance) => {
-                BackAndroid.addEventListener('hardwareBackPress', instance._handleBackPressAndroid);
+                BackHandler.addEventListener('hardwareBackPress', instance._handleBackPressAndroid);
             },
             destroy: (instance) => {
-                BackAndroid.removeEventListener('hardwareBackPress', instance._handleBackPressAndroid);
+                BackHandler.removeEventListener('hardwareBackPress', instance._handleBackPressAndroid);
             },
         };
     },
 })();
+
 
 export default class Navigator extends AutoBindComponent {
 
@@ -59,6 +60,7 @@ export default class Navigator extends AutoBindComponent {
     componentWillUnmount() {
         navigatorConfig.destroy(this);
     }
+
 
     attachNavigationBar(sceneReference, navbarComponent) {
         this.setState(({navbars}) => {
@@ -92,7 +94,6 @@ export default class Navigator extends AutoBindComponent {
         return true;
     }
 
-    // private:
     // gets all active routes
     _getAllActiveRoutes() {
         return this.refs.navigator.getCurrentRoutes();
@@ -107,9 +108,10 @@ export default class Navigator extends AutoBindComponent {
 
     render() {
         const { navbars } = this.state;
+        const { style } = this.props;
         return (
             <ReactNativeNavigator
-                style={{flex: 1, backgroundColor: '#000'}}
+                style={[{flex: 1, backgroundColor: '#000'}, style]}
                 ref='navigator'
                 initialRoute={this._rootScene}
                 configureScene={({transition}) => transition}

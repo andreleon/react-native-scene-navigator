@@ -15,6 +15,10 @@ const { width: deviceWidth } = Dimensions.get('window');
 import Scene from '../Scene';
 import Button from '../Button';
 
+import Dispatcher from '../../utils/Dispatcher';
+
+const _TabsDispatcher = new Dispatcher();
+
 export default class TabNavigator extends AutoBindComponent {
 
     navbars = {};
@@ -74,6 +78,7 @@ export default class TabNavigator extends AutoBindComponent {
                     },
                     tabNavigator: {
                         setBadge: this.setBadge,
+                        selectTab: this.selectTab,
                     },
                     scene: { ...child.props },
                 }),
@@ -139,6 +144,10 @@ export default class TabNavigator extends AutoBindComponent {
         this.setState(({selectedTabIndex}) => {
             if (index === selectedTabIndex) return;
             this.updateNavigationBar(index);
+
+            const reference = get(this, `_tabStack[${index}].reference`, false);
+            _TabsDispatcher.dispatch({reference, index});
+
             return {
                 selectedTabIndex: index,
             };
@@ -186,7 +195,7 @@ export default class TabNavigator extends AutoBindComponent {
 
     renderTabButtons() {
         const { style } = this;
-        return this._tabStack.map(({child, title, icon, selectedIcon, reference}, index) => {
+        return this._tabStack.map(({child, title, icon, selectedIcon, reference, accessibilityLabel}, index) => {
             const { selectedTabIndex } = this.state;
             const isActive = selectedTabIndex === index;
             return (
@@ -194,6 +203,7 @@ export default class TabNavigator extends AutoBindComponent {
                     key={index}
                     style={[style.button, {width: this._buttonWidth}]}
                     onPress={() => this.selectTab(index)}
+                    accessibilityLabel={accessibilityLabel}
                 >
                     { icon &&
                         <View style={{padding: 10, paddingLeft: 20, paddingRight: 20}}>
@@ -215,6 +225,18 @@ export default class TabNavigator extends AutoBindComponent {
                 </View>
             );
         });
+    }
+
+    onChangeTab(cb) {
+        _TabsDispatcher.subscribe(cb);
+    }
+
+    offChangeTab(cb) {
+        _TabsDispatcher.unsubscribe(cb);
+    }
+
+    componentWillUnmount() {
+        _TabsDispatcher.destroy();
     }
 
     render() {
