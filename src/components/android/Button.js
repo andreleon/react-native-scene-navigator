@@ -1,5 +1,5 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import {
     TouchableNativeFeedback,
@@ -7,33 +7,48 @@ import {
     StyleSheet,
 } from 'react-native';
 
-export default class Button extends AutoBindComponent {
+export default class Button extends Component {
 
-    onPress(event) {
+    static propTypes = {
+        onPress: PropTypes.func,
+        children: PropTypes.any,
+        style: PropTypes.any,
+        buttonAccessibilityLabel: PropTypes.string,
+    };
+
+    onPress = (event) => {
         const { onPress } = this.props;
 
         if (onPress) onPress(event);
-    }
+    };
 
     render() {
-        const { children, style: extraStyle, accessibilityLabel } = this.props;
-        const { style } = this;
+        const {
+            children,
+            style: extraStyle,
+            buttonAccessibilityLabel,
+        } = this.props;
+
         return (
             <TouchableNativeFeedback
                 onPress={this.onPress}
                 background={TouchableNativeFeedback.SelectableBackground()}
             >
-                <View style={[style.container, extraStyle]} accessibilityLabel={accessibilityLabel}>
+                <View
+                    accessibilityLabel={buttonAccessibilityLabel}
+                    accessible={!!buttonAccessibilityLabel}
+                    style={[style.container, extraStyle]}>
                     {children}
                 </View>
             </TouchableNativeFeedback>
         );
     }
 
-    style = StyleSheet.create({
-        container: {
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-    });
 };
+
+const style = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});

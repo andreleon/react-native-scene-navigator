@@ -1,5 +1,5 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import {
     TouchableHighlight,
@@ -7,34 +7,47 @@ import {
     StyleSheet,
 } from 'react-native';
 
-export default class Button extends AutoBindComponent {
+export default class Button extends Component {
 
-    onPress(event) {
+    static propTypes = {
+        onPress: PropTypes.func,
+        children: PropTypes.any,
+        style: PropTypes.any,
+        buttonAccessibilityLabel: PropTypes.string,
+    };
+
+    onPress = (event) => {
         const { onPress } = this.props;
 
         if (onPress) onPress(event);
-    }
+    };
 
     render() {
-        const { children, style: extraStyle, accessibilityLabel } = this.props;
-        const { style } = this;
+        const {
+            children,
+            style: extraStyle,
+            buttonAccessibilityLabel,
+        } = this.props;
+
         return (
             <TouchableHighlight
                 onPress={this.onPress}
                 underlayColor={'rgba(0,0,0,0.5)'}
                 style={[style.container, extraStyle]}
             >
-                <View accessibilityLabel={accessibilityLabel}>
+                <View
+                    accessible={!!buttonAccessibilityLabel}
+                    accessibilityLabel={buttonAccessibilityLabel}>
                     {children}
                 </View>
             </TouchableHighlight>
         );
-    }
-
-    style = StyleSheet.create({
-        container: {
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-    });
+    };
 };
+
+const style = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});

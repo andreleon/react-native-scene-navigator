@@ -1,6 +1,6 @@
 {
   "name": "react-native-scene-navigator",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "React Native navigator",
   "main": "lib/index.js",
   "repository": {
@@ -17,21 +17,23 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
+    "prop-types": "^15.6.0",
     "react-autobind-component": "^1.0.5",
-    "react-native-deprecated-custom-components": "^0.1.0"
+    "react-native-deprecated-custom-components": "0.1.1"
   },
   "peerDependencies": {
-    "react": ">=0.14.0",
+    "react": ">=15.0.0",
     "react-native": ">=0.42.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
-    "babel-eslint": "^7.2.1",
+    "babel-eslint": "^8.0.1",
     "babel-jest": "19.0.0",
-    "babel-preset-react-native": "1.9.1",
-    "eslint": "^3.18.0",
-    "eslint-config-google": "^0.7.1",
-    "eslint-plugin-react": "^6.10.3",
+    "babel-preset-react-native": "^4.0.0",
+    "eslint": "^4.9.0",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-react": "^7.4.0",
     "jest": "19.0.2",
     "lodash": "^4.17.4",
     "react-test-renderer": "~15.4.1"
