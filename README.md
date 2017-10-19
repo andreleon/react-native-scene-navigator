@@ -1,7 +1,7 @@
 # react-native-scene-navigator
 [![npm version](https://badge.fury.io/js/react-native-scene-navigator.svg)](https://badge.fury.io/js/react-native-scene-navigator)
 
-A **cross-platform**, easy and intuitive way to manage your scenes in react-native. Adapts to the current platform, e.g. tabs on top for Android and tabs on the botton for iOS. Scene transitions default to the native platform patterns, but can be changed to your needs.
+A **cross-platform**, easy and intuitive way to manage your scenes in react-native. Adapts to the platform, e.g. tabs on top for Android and tabs on the botton for iOS. Scene transitions default to the native platform patterns, but can be changed to your needs.
 **Run the example on both iOS and Android to see it in action :D**
 
 ## Navigator
@@ -43,8 +43,9 @@ export default class App extends Component {
 Open any scene you have configured with `Navigator`.
 `navigator.open(reference, params)`
 ```
-examplePressHandler() {
+onPress() {
     const { navigator } = this.props;
+
     navigator.open('scene-reference', {
         pass: {
             any: {
@@ -59,8 +60,9 @@ examplePressHandler() {
 Goes back one scene.
 `navigator.back()`
 ```
-examplePressHandler() {
+onPress() {
     const { navigator } = this.props;
+
     navigator.back();
 }
 ```
@@ -69,8 +71,9 @@ examplePressHandler() {
 Attaching a navigationbar is easy:
 ```
 export default class SomeScene extends Component {
-    componentDidMount() {
+    componentWillMount() {
         const { scene: { reference }, navigator } = this.props;
+
         // navigator needs a scene reference,
         // or it won't know where to attach your NavigationBar!
         navigator.attachNavigationBar(reference,
@@ -81,46 +84,6 @@ export default class SomeScene extends Component {
     }
     ...
 }
-```
-
-### Navigator.transitions
-Navigator uses the same Scene transitions as the react-native `Navigator`
-([React-Native configurescene](https://facebook.github.io/react-native/docs/navigator.html#configurescene))
-
-#### standard
-```
-<Scene
-    transition={Navigator.transitions.standard}
-    ...
-/>
-```
-On ios this equals `React.Navigator.SceneConfigs.PushFromRight`.
-On android this equals `React.Navigator.SceneConfigs.FloatFromBottomAndroid`.
-
-#### modal
-```
-<Scene
-    transition={Navigator.transitions.modal}
-    ...
-/>
-```
-For both `React.Navigator.SceneConfigs.FloatFromBottom`.
-
-#### custom
-If you wish, you can pass any `React.Navigator.SceneConfigs` to customize your scene transitions. ([React-Native configurescene](https://facebook.github.io/react-native/docs/navigator.html#configurescene))
-
-## Scene
-```
-<Scene
-    icon={require('~/images/notifications.png')} // TabNavigator
-    selectedIcon={require('~/images/notifications.png')} // TabNavigator
-    title={'Scene title'} // TabNavigator
-    badge={number} // TabNavigator
-    transition={Navigator.transitions.standard} // Navigator
-    reference={'scene-reference'}
-    component={SomeScene}
-    any={prop} // any prop will be passed to SomeScene
-/>
 ```
 
 ## TabNavigator
@@ -138,6 +101,7 @@ import Tab3Scene from '~/scenes/Tab3';
 export default class TabbedScene extends Component {
     render() {
         const { navigator, scene } = this.props;
+        
         return (
             <TabNavigator
                 navigator={navigator}
@@ -221,5 +185,49 @@ const tabNavigatorConfigurationProps = {
     ...
 </TabNavigator>
 ```
+
+## Scene
+A Scene is used by Navigator and TabNavigator to render your scenes/views
+
+## reference={'scene-reference'} - **required**
+The scene reference you use to open a scene with `navigator.open(<reference>)`
+
+## component={SomeScene} - **required**
+The component the scene will render
+
+### icon={<image source>}
+The tab bar icon
+
+### selectedIcon={require('~/images/notifications.png')}
+Selected tab bar icon 
+
+### title={'Scene title'}
+Tab title
+
+### badge={number}
+Tab badge number
+
+### transition={Navigator.transitions.standard}
+The transition when opening or closing a scene with `navigator.open()`
+
+#### Navigator.transitions
+You can configure scene transitions for each individual scene.
+##### standard
+```
+<Scene
+    transition={Navigator.transitions.standard}
+    ...
+/>
+```
+##### modal
+```
+<Scene
+    transition={Navigator.transitions.modal}
+    ...
+/>
+```
+
+##any={prop}
+any custom prop will be passed to your scene as well
 
 
