@@ -25,6 +25,11 @@ export default class TabNavigator extends Component {
 
     static childContextTypes = {
         tabNavigator: PropTypes.object,
+        navigator: PropTypes.object,
+    };
+
+    static contextTypes = {
+        navigator: PropTypes.object,
     };
 
     static propTypes = {
@@ -44,7 +49,13 @@ export default class TabNavigator extends Component {
     };
 
     getChildContext() {
+        const { navigator } = this.context;
+
         return {
+            navigator: {
+                ...navigator,
+                attachNavigationBar: this.attachNavigationBar,
+            },
             tabNavigator: {
                 setBadge: this.setBadge,
                 selectTab: this.selectTab,
