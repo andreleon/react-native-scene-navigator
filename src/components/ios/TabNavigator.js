@@ -89,7 +89,9 @@ export default class TabNavigator extends Component {
                 selectedIcon,
                 reference,
                 accessibilityLabel,
-                child,
+                child: cloneElement(child, {
+                    scene: { ...child.props },
+                }),
             };
         });
 

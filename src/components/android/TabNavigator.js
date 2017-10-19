@@ -103,7 +103,10 @@ export default class TabNavigator extends Component {
                 reference,
                 badge,
                 accessibilityLabel,
-                child,
+                child: cloneElement(child, {
+                    scene: { ...child.props },
+                }),
+
             };
         });
 

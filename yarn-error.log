@@ -1,0 +1,72 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn
+
+PATH: 
+  node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/leonsmit/Library/Android/sdk/tools:/Users/leonsmit/Library/Android/sdk/platform-tools:/Users/leonsmit/Library/Android/sdk/build-tools
+
+Yarn version: 
+  0.16.1
+
+Node version: 
+  6.10.3
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "react-native-scene-navigator",
+    "version": "1.3.0-a",
+    "description": "React Native navigator",
+    "main": "lib/index.js",
+    "repository": {
+      "url": "https://github.com/andreleon/react-native-scene-navigator",
+      "type": "git"
+    },
+    "author": "Leon Smit <lee_smit@live.nl>",
+    "license": "MIT",
+    "scripts": {
+      "clean": "rm -rf ./lib",
+      "compile": "npm run clean && babel ./src --out-dir ./lib",
+      "update-example": "cp -R ./lib ./example/ViewManagers && mv ./example/ViewManagers/lib ./example/ViewManagers/react-native-scene-navigator",
+      "prepublish": "npm run compile"
+    },
+    "dependencies": {
+      "lodash": "^4.17.4",
+      "prop-types": "^15.6.0",
+      "react-autobind-component": "^1.0.5",
+      "react-native-deprecated-custom-components": "0.1.1"
+    },
+    "peerDependencies": {
+      "react": ">=15.0.0",
+      "react-native": ">=0.42.0"
+    },
+    "devDependencies": {
+      "babel-cli": "^6.24.0",
+      "babel-eslint": "^8.0.1",
+      "babel-jest": "19.0.0",
+      "babel-preset-react-native": "^4.0.0",
+      "eslint": "^4.9.0",
+      "eslint-config-google": "^0.9.1",
+      "eslint-plugin-babel": "^4.1.2",
+      "eslint-plugin-react": "^7.4.0",
+      "jest": "19.0.2",
+      "lodash": "^4.17.4",
+      "react-test-renderer": "~15.4.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+bower manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: connect ETIMEDOUT 104.16.61.173:443
+      at Object.exports._errnoException (util.js:1018:11)
+      at exports._exceptionWithHostPort (util.js:1041:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1086:14)
