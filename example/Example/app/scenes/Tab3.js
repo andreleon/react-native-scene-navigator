@@ -1,5 +1,4 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 
 import {
     NavBar,
@@ -9,7 +8,7 @@ import {
     RightButton,
 } from 'components';
 
-export default class Tab3Scene extends AutoBindComponent {
+export default class Tab3Scene extends Component {
 
     state = {
         pressed: 0,

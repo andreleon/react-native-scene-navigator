@@ -1,6 +1,6 @@
 {
   "name": "react-native-scene-navigator",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "React Native navigator",
   "main": "lib/index.js",
   "repository": {
@@ -18,8 +18,7 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "react-autobind-component": "^1.0.5",
-    "react-native-deprecated-custom-components": "0.1.1"
+    "react-native-deprecated-custom-components": "https://github.com/andreleon/react-native-custom-components.git"
   },
   "peerDependencies": {
     "react": ">=15.0.0",

@@ -1,5 +1,5 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
+
 import {
     StyleSheet,
 } from 'react-native';
@@ -9,9 +9,9 @@ import {
     Text,
 } from 'components';
 
-export default class LeftButton extends AutoBindComponent {
+export default class LeftButton extends Component {
 
-    onPress() {
+    onPress = () => {
         const { onPress } = this.props;
 
         if (onPress) onPress();

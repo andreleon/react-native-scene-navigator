@@ -1,5 +1,4 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 
 import {
     TouchableHighlight,
@@ -7,9 +6,9 @@ import {
     StyleSheet,
 } from 'react-native';
 
-export default class Button extends AutoBindComponent {
+export default class Button extends Component {
 
-    onPress(event) {
+    onPress = (event) => {
         const { onPress } = this.props;
 
         if (onPress) onPress(event);

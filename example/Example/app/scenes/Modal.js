@@ -1,5 +1,4 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 
 import {
     NavBar,
@@ -9,7 +8,7 @@ import {
     SimpleButton,
 } from 'components';
 
-export default class ModalScene extends AutoBindComponent {
+export default class ModalScene extends Component {
 
     componentDidMount() {
         const { scene: { reference }, navigator } = this.props;

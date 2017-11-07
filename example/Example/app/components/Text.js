@@ -1,12 +1,11 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 
 import {
     Text as ReactNativeText,
     StyleSheet,
 } from 'react-native';
 
-export default class Text extends AutoBindComponent {
+export default class Text extends Component {
     render() {
         const { children, style: extraStyle } = this.props;
         const { style } = this;

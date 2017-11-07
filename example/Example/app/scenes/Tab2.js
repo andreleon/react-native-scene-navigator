@@ -1,5 +1,4 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 
 import { ScrollView } from 'react-native';
 
@@ -10,7 +9,7 @@ import {
     SimpleButton,
 } from 'components';
 
-export default class Tab2Scene extends AutoBindComponent {
+export default class Tab2Scene extends Component {
 
     componentDidMount() {
         const { scene: { reference }, navigator } = this.props;

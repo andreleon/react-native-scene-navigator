@@ -1,5 +1,4 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 
 import {
     StyleSheet,
@@ -23,9 +22,9 @@ function elevation(e) {
     };
 }
 
-export default class SimpleButton extends AutoBindComponent {
+export default class SimpleButton extends Component {
 
-    onPress(event) {
+    onPress = (event) => {
         const { onPress } = this.props;
 
         if (onPress) onPress(event);

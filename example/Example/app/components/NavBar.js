@@ -1,5 +1,5 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
+
 import {
     View,
     StyleSheet,
@@ -9,7 +9,7 @@ import {
 
 const { width } = Dimensions.get('window');
 
-export default class NavBar extends AutoBindComponent {
+export default class NavBar extends Component {
     render() {
         const { children, style: extraStyle } = this.props;
         const { style } = this;

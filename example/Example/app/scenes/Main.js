@@ -1,5 +1,4 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 import { TabNavigator, Scene } from 'react-native-scene-navigator'; // ex
 
 import Tab1Scene from 'scenes/Tab1';
@@ -42,7 +41,7 @@ const tabNavigatorConfigurationProps = {
     // },
 };
 
-export default class MainScene extends AutoBindComponent {
+export default class MainScene extends Component {
     constructor(props) {
         super(props);
 

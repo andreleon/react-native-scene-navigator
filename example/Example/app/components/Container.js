@@ -1,12 +1,11 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 
 import {
     View,
     StyleSheet,
 } from 'react-native';
 
-export default class Container extends AutoBindComponent {
+export default class Container extends Component {
     render() {
         const { children, style: extraStyle } = this.props;
         const { style } = this;

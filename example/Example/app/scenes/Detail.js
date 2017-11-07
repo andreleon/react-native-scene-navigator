@@ -1,5 +1,4 @@
-import React from 'react';
-import AutoBindComponent from 'react-autobind-component';
+import React, { Component } from 'react';
 
 import {
     NavBar,
@@ -9,7 +8,7 @@ import {
     SimpleButton,
 } from 'components';
 
-export default class DetailScene extends AutoBindComponent {
+export default class DetailScene extends Component {
 
     componentDidMount() {
         const { scene: { reference }, navigator } = this.props;
@@ -21,7 +20,7 @@ export default class DetailScene extends AutoBindComponent {
         );
     }
 
-    openModal() {
+    openModal = () => {
         const { navigator } = this.props;
         navigator.open('modal', {_id: 'modal-id'});
     }
