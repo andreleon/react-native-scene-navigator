@@ -31,7 +31,7 @@ export default class TabNavigator extends Component {
         tabBarTintColor: PropTypes.string,
         tabTintColor: PropTypes.string,
         tabActiveTintColor: PropTypes.string,
-        translucentIOS: PropTypes.string,
+        translucentIOS: PropTypes.bool,
     };
 
     getChildContext() {

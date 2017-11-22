@@ -130,12 +130,6 @@ export default class TabNavigator extends Component {
             badgeNumbers,
         };
 
-        this.indicatorAnimator = Animated.event([{
-            nativeEvent: {
-                offset: this.state.offset,
-                position: this.state.position,
-            },
-        }], {listener: this.handlePageScroll});
         this.state.actualOffset = Animated.add(this.state.position, this.state.offset);
         this.state.indicatorLeft = Animated.multiply(this._buttonWidth, this.state.actualOffset);
     };
@@ -173,6 +167,10 @@ export default class TabNavigator extends Component {
     };
 
     selectTab = (index) => {
+        const ref = get(this, `_tabStack[${index}].reference`, false);
+
+        _TabsDispatcher.dispatch({reference: ref, index});
+
         this.refs.viewpager.setPage(index);
     };
 
@@ -201,7 +199,9 @@ export default class TabNavigator extends Component {
             <Animated.View
                 style={[style.indicator, tabIndicatorStyleAndroid, {
                     width: _buttonWidth,
-                    left: this.state.indicatorLeft,
+                    transform: [{
+                        translateX: this.state.indicatorLeft,
+                    }],
                 }]}
             />
         );
@@ -270,7 +270,7 @@ export default class TabNavigator extends Component {
             );
         });
     };
-
+    
     renderTabs = () => {
         return this._tabStack.map(({child, title = ''}, index) => {
             return (
@@ -303,10 +303,10 @@ export default class TabNavigator extends Component {
         return (
             <View style={style.container}>
                 <View style={[
-                        style.tabs,
-                        tabBarTintColor && {backgroundColor: tabBarTintColor},
-                        tabBarHeightAndroid && {height: tabBarHeightAndroid},
-                    ]}>
+                    style.tabs,
+                    tabBarTintColor && {backgroundColor: tabBarTintColor},
+                    tabBarHeightAndroid && {height: tabBarHeightAndroid},
+                ]}>
                     { this.renderTabButtons() }
                     { this.renderTabIndicator() }
                 </View>
@@ -314,7 +314,16 @@ export default class TabNavigator extends Component {
                     ref={'viewpager'}
                     style={{flexGrow: 1}}
                     initialPage={this._initialPage}
-                    onPageScroll={this.indicatorAnimator}
+                    onPageScroll={
+                        Animated.event([{
+                            nativeEvent: {
+                                offset: this.state.offset,
+                                position: this.state.position,
+                            },
+                        }], {
+                            listener: this.handlePageScroll,
+                        })
+                    }
                     scrollEnabled={scrollEnabledAndroid}
                     pageMargin={pageMarginAndroid}
                 >

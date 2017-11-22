@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "reload": "npm install ../../ --save"
+    "reload": "npm uninstall react-native-scene-navigator && npm install ../../ --save"
   },
   "dependencies": {
     "lodash": "^4.17.4",
